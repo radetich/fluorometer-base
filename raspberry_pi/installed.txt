@@ -7,3 +7,14 @@ python3-pip
 to install:
 USBmount forked from rbrito
 SystemD Script to recieve UART
+
+
+UART SOLUTION:
+
+Ok the solution was two part. first added the line suggested by @PrintedWeezl dtoverlay=disable-bt at the end of the 
+config.txt file. then used putty to connect to the pi, did sudo raspi-config and followed the instructions given by 
+@OutsourcedGuru " just go into sudo raspi-config , go to Interfaces -> Serial and answer "no", "yes" to the 
+next two prompts." then clicked finish rebooted and it works :slight_smile:
+
+
+SO! in raspi config we enable serial but have NO console. all else disabled...
