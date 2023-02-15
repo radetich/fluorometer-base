@@ -3,7 +3,7 @@
 void setup() 
 {
   HWSERIAL.begin(9600);
-  while (!HWSERIAL) {}
+  //while (!HWSERIAL) {}
 }
 
 void loop() {
