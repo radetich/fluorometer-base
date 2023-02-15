@@ -20,7 +20,7 @@ void setup()
   // (We don't need to do anything special to use the analog input.)
 
   pinMode(boardLedPin, OUTPUT);
-  Serial.begin(9600);
+  Serial1.begin(9600);
 }
 
 
@@ -37,7 +37,7 @@ void loop()
   //delay(100);
 
 
-  if (Serial.available()) 
+  if (Serial1.available()) 
   {
     analogWrite(boardLedPin, 0);
     //char data_rcvd = Serial.read();   // read one byte from serial buffer and save to data_rcv
@@ -58,7 +58,7 @@ void loop()
     //send data
 
 
-    Serial.write("B");
+    Serial1.write("c");
 
 
   }
