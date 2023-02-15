@@ -1,5 +1,9 @@
 installed:
 
+python (3.9 to match local conda)
+python3-pip
+
+
 to install:
 USBmount forked from rbrito
 SystemD Script to recieve UART
