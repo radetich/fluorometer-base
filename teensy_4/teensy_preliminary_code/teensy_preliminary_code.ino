@@ -20,7 +20,7 @@ void setup()
   // (We don't need to do anything special to use the analog input.)
 
   pinMode(boardLedPin, OUTPUT);
-  Serial.begin(115200);
+  Serial.begin(9600);
 }
 
 
@@ -43,6 +43,9 @@ void loop()
     //char data_rcvd = Serial.read();   // read one byte from serial buffer and save to data_rcv
 
 
+    //right now these are two seperate tests:
+    
+    //enable on serial connnection
     analogWrite(ledPin, 255);
     lightLevel = analogRead(sensorPin);
     Serial.println(lightLevel);
@@ -51,6 +54,11 @@ void loop()
     lightLevel = analogRead(sensorPin); 
     Serial.println(lightLevel);
     delay(100);
+
+    //send data
+
+
+    Serial.write("B");
 
 
   }

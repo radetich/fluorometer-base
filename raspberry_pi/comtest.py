@@ -61,7 +61,5 @@ teensy = serial.Serial(
 counter=0
                 
 while 1:
-    now=datetime.datetime.now()
-    y=now.strftime("%S")
     x=teensy.readline()
-    print x,y
+    print(x)
