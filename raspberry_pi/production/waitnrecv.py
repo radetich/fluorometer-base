@@ -15,5 +15,4 @@ if __name__ == '__main__':
         currtime = time.time()
         while time.time() < currtime + timeout:
             # this will run for timeout seconds and then exit
-
-
+            time.sleep(1)
