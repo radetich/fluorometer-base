@@ -59,3 +59,5 @@ if __name__ == '__main__':
 
                 dpointer.write('END BATCH OF DATA\n\n\n')
                 dpointer.close()
+                #we should probably do this somewhere else but for now this + nopwdsudo is the solution
+                os.system('sudo shutdown now')

@@ -1,0 +1,10 @@
+[Unit]
+Description=Breadboard Demo
+After=time-sync.target
+[Service]
+Type=simple
+User=control
+Restart=never
+ExecStart=/usr/bin/python3 /home/control/breadboard_test.py
+[Install]
+WantedBy=multi-user.target
