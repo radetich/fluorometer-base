@@ -34,7 +34,7 @@ void loop() {
     {
       analogWrite(boardLedPin, 255);
       //We are transferring! begin transfer.
-      delay(1000);
+      
     }
   }
 }
