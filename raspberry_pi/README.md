@@ -4,6 +4,7 @@
 
 ## Programs installed on the Pi:
 
+vim (this is a convenience thing)  <br>
 python3.9  <br>
 python3-pip  <br>
 pyserial (installed via pip)  <br>
