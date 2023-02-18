@@ -7,7 +7,9 @@ import serial
 import time
 import os
 
-#this is for the idea forge. It forces a change in my hostname so unless I want to connect a screen I have to get the IP this way
+#sigint should send END TRANSFER? such that we dont ever leave the teensy on
+
+#OS shutting off probably also should send a END TRANSFER message just in case. Cant hurt. Implement via hook
 
 
 timeout = 300   # [seconds for data collection]
@@ -15,8 +17,8 @@ timeout = 300   # [seconds for data collection]
 #begin...
 if __name__ == '__main__':
     with open("/media/usb/data.txt", "a") as dpointer:
-        #debug ip printout
-        os.system('ip addr >> /media/usb/ip.txt')
+        #debug ip printout. This is for the idea forge. DONT leave this in production
+        os.system('ip addr > /media/usb/ip.txt')
         #data batch
         dpointer.write('BEGIN BATCH OF DATA\n\n\n')
         #open delay file from USB to determine how long to wait for
@@ -39,6 +41,8 @@ if __name__ == '__main__':
             ser.write(bytes(msg, encoding='utf-8'))
             line = ser.readline().decode('utf-8').rstrip()
             print(line)
+            while(line != "GOT BEGIN TRANSFER"):
+                pass
             if(line == "GOT BEGIN TRANSFER"):
                 print("SYNCED! Waiting for data...")
                 currtime = time.time()
