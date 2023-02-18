@@ -5,24 +5,20 @@
 # import
 import serial
 import time
-import socket   
+import os
 
 #this is for the idea forge. It forces a change in my hostname so unless I want to connect a screen I have to get the IP this way
-ip = 0
-if(socket.gethostname()):
-    hostname=socket.gethostname()   
-    ip=socket.gethostbyname(hostname)   
-    print("CURR HOSTNAME:"+hostname)   
-    print("CURR IPADDR:"+ip)
+
 
 timeout = 300   # [seconds for data collection]
 
 #begin...
 if __name__ == '__main__':
     with open("/media/usb/data.txt", "a") as dpointer:
-        dpointer.write('IP ADDR\n')
-        dpointer.write(str(ip) + "\n")
-        dpointer.write('BEGIN DATA\n')
+        #debug ip printout
+        os.system('ip addr >> /media/usb/ip.txt')
+        #data batch
+        dpointer.write('BEGIN BATCH OF DATA\n\n\n')
         #open delay file from USB to determine how long to wait for
         with open("/media/usb/delay.txt", "r") as fpointer:
             #cast wait time to int
@@ -34,6 +30,10 @@ if __name__ == '__main__':
             fpointer.close()
             #begin serial handshakes
             ser = serial.Serial('/dev/ttyAMA0', 115200, timeout=1)
+
+            #end any mishandled transfers well..
+            msg = 'END TRANSFER\n'
+            ser.write(bytes(msg, encoding='utf-8'))
             ser.reset_input_buffer()
             msg = 'BEGIN TRANSFER\n'
             ser.write(bytes(msg, encoding='utf-8'))
@@ -53,4 +53,5 @@ if __name__ == '__main__':
                 msg = 'END TRANSFER\n'
                 ser.write(bytes(msg, encoding='utf-8'))
 
+                dpointer.write('END BATCH OF DATA\n\n\n')
                 dpointer.close()
