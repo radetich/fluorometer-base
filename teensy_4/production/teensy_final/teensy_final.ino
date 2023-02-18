@@ -22,7 +22,6 @@ void loop() {
   //wait for initial ack
   if (HWSERIAL.available() > 0) {
     String data = HWSERIAL.readStringUntil('\n');
-
     //debug prints. use liberally
     //HWSERIAL.print("Pi sent to firmware: ");
     //HWSERIAL.println(data);
@@ -34,6 +33,8 @@ void loop() {
     if(data == "BEGIN TRANSFER")
     {
       analogWrite(boardLedPin, 255);
+      //We are transferring! begin transfer.
+      delay(1000);
     }
   }
 }

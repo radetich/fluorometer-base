@@ -9,5 +9,8 @@ if __name__ == '__main__':
         ser.write(bytes(msg, encoding='utf-8'))
         line = ser.readline().decode('utf-8').rstrip()
         print(line)
+        if(line == "GOT BEGIN TRANSFER"):
+            print("SYNCED! Waiting...")
+            time.sleep(100)
         time.sleep(1)
 
