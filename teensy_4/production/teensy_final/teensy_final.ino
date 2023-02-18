@@ -29,7 +29,6 @@ void loop() {
     //send ack back w some extra
     HWSERIAL.print("GOT ");
     HWSERIAL.println(data);
-
     if(data == "BEGIN TRANSFER")
     {
       analogWrite(boardLedPin, 255);

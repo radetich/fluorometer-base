@@ -2,19 +2,18 @@ installed:
 
 python (3.9 to match local conda)
 python3-pip
-
+pyserial (installed via pip)
+usbmount (custom files)
+debhelper 
+build-essential
+Radetich/usbmount (installer inside of ~/programs/usbmount)
 
 to install:
-USBmount forked from rbrito
 SystemD Script to recieve UART
 
 
-UART SOLUTION:
 
-Ok the solution was two part. first added the line suggested by @PrintedWeezl dtoverlay=disable-bt at the end of the 
-config.txt file. then used putty to connect to the pi, did sudo raspi-config and followed the instructions given by 
-@OutsourcedGuru " just go into sudo raspi-config , go to Interfaces -> Serial and answer "no", "yes" to the 
-next two prompts." then clicked finish rebooted and it works :slight_smile:
+NOTES:
 
-
-SO! in raspi config we enable serial but have NO console. all else disabled...
+Run sudo raspi-config Interfaces -> Serial and answer "no", "yes" to the next two prompts.
+Sudo vi /boot/config.txt and add dtoverlay=disable-bt. This is not strictly necessary.
