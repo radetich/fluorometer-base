@@ -7,6 +7,8 @@ import serial
 import time
 
 
+timeout = 300   # [seconds for data collection]
+
 #begin...
 if __name__ == '__main__':
 
@@ -27,14 +29,14 @@ if __name__ == '__main__':
         line = ser.readline().decode('utf-8').rstrip()
         print(line)
         if(line == "GOT BEGIN TRANSFER"):
-            print("SYNCED! Waiting...")
-            while(1):
+            print("SYNCED! Waiting for data...")
+            currtime = time.time()
+            while time.time() < currtime + timeout:
+                # this will run for timeout seconds and then exit
+                # work in progress
                 line = ser.readline().decode('utf-8').rstrip()
                 print(line)
-
-                
-            #timeout = 300   # [seconds for data collection]
-            #currtime = time.time()
-            #while time.time() < currtime + timeout:
-                # this will run for timeout seconds and then exit
-            #    time.sleep(1)
+            #what this says is kinda superfluous since we dont read it
+            #but i like pretty acknowledgements. And it could be helpful for debugging
+            msg = 'END TRANSFER\n'
+            ser.write(bytes(msg, encoding='utf-8'))

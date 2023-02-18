@@ -52,15 +52,16 @@ void loop()
       HWSERIAL.print("FIL ");
       HWSERIAL.println(filReturn);
 
-      //wait a lil
+      //wait a lil so we can see the action
       delay(100);
       //turn the led off
       analogWrite(ledPin, 0);
-      //wait a lil
+      //wait a lil so we can see the action
       delay(100);
-      if (HWSERIAL.available() > 0) 
+      if (HWSERIAL.available() > 0)
       {
         data = HWSERIAL.readStringUntil('\n');
+        analogWrite(boardLedPin, 0);
       }
     }
   }
