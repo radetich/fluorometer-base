@@ -28,8 +28,13 @@ if __name__ == '__main__':
         print(line)
         if(line == "GOT BEGIN TRANSFER"):
             print("SYNCED! Waiting...")
-            timeout = 300   # [seconds for data collection]
-            currtime = time.time()
-            while time.time() < currtime + timeout:
+            while(1):
+                line = ser.readline().decode('utf-8').rstrip()
+                print(line)
+
+                
+            #timeout = 300   # [seconds for data collection]
+            #currtime = time.time()
+            #while time.time() < currtime + timeout:
                 # this will run for timeout seconds and then exit
-                time.sleep(1)
+            #    time.sleep(1)
