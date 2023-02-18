@@ -3,17 +3,25 @@ installed:
 python (3.9 to match local conda)
 python3-pip
 pyserial (installed via pip)
-usbmount (custom files)
 debhelper 
 build-essential
-Radetich/usbmount (installer inside of ~/programs/usbmount)
-
-to install:
-SystemD Script to recieve UART
-
-
+liblockfile-bin 
+liblockfile1
+lockfile-progs
+pmount
+radetich/usbmount (installer inside of ~/programs/usbmount)
 
 NOTES:
 
 Run sudo raspi-config Interfaces -> Serial and answer "no", "yes" to the next two prompts.
-Sudo vi /boot/config.txt and add dtoverlay=disable-bt. This is not strictly necessary.
+sudo vi /boot/config.txt and add dtoverlay=disable-bt. This is not strictly necessary.
+
+sudo vi /etc/usbmount/usbmount.conf
+	remove sync mount option
+	FS_MOUNTOPTIONS="-fstype=vfat,uid=control,gid=control,dmask=0007,fmask=0117"
+
+# HOTFIX FOR PRIVATE MOUNTS (this makes the usb work... lol)
+
+sudo vi /lib/systemd/system/systemd-udevd.service
+SET
+PrivateMounts=no
