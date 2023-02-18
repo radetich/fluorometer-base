@@ -1,12 +1,12 @@
 #define HWSERIAL Serial1
 
-void setup() 
-{
+void setup() {
   HWSERIAL.begin(9600);
-  //while (!HWSERIAL) {}
 }
-
 void loop() {
-  HWSERIAL.println("Hello from Teensy Firmware!");
-  delay(1000);
+  if (HWSERIAL.available() > 0) {
+    String data = HWSERIAL.readStringUntil('\n');
+    HWSERIAL.print("Pi sent to firmware: ");
+    HWSERIAL.println(data);
+  }
 }
