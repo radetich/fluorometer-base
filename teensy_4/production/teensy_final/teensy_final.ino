@@ -17,10 +17,24 @@ void setup()
 }
 
 void loop() {
+  //make sure we are at 0 for LED
+  analogWrite(boardLedPin, 0);
+  //wait for initial ack
   if (HWSERIAL.available() > 0) {
     String data = HWSERIAL.readStringUntil('\n');
-    HWSERIAL.print("Pi sent to firmware: ");
+
+    //debug prints. use liberally
+    //HWSERIAL.print("Pi sent to firmware: ");
+    //HWSERIAL.println(data);
+
+    //send ack back w some extra
+    HWSERIAL.print("GOT ");
     HWSERIAL.println(data);
+
+    if(data == "BEGIN TRANSFER")
+    {
+      analogWrite(boardLedPin, 255);
+    }
   }
 }
 
