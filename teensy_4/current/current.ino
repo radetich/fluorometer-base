@@ -48,7 +48,7 @@ void loop()
       emmReturn = analogRead(sensorPin);
       HWSERIAL.print("EMM ");
       HWSERIAL.println(emmReturn);
-      filReturn = analogRead(sensorPin); 
+      filReturn = analogRead(sensor1Pin); 
       HWSERIAL.print("FIL ");
       HWSERIAL.println(filReturn);
 
