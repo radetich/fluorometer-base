@@ -56,6 +56,6 @@ if __name__ == '__main__':
                 #but i like pretty acknowledgements. And it could be helpful for debugging
                 msg = 'END TRANSFER\n'
                 ser.write(bytes(msg, encoding='utf-8'))
-
+                ser.close()
                 dpointer.write('END BATCH OF DATA\n\n\n')
                 dpointer.close()
