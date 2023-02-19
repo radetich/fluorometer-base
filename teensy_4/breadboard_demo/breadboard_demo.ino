@@ -27,10 +27,6 @@ void loop()
   if (HWSERIAL.available() > 0) 
   {
     String data = HWSERIAL.readStringUntil('\n');
-    //debug prints. use liberally
-    //HWSERIAL.print("Pi sent to firmware: ");
-    //HWSERIAL.println(data);
-
     //send ack back w some extra
     HWSERIAL.print("GOT ");
     HWSERIAL.println(data);
@@ -38,12 +34,8 @@ void loop()
     {
       analogWrite(boardLedPin, 255);
       //We are transferring! begin transfer.
-      //for now, this uses our breaboard LEDs. Might be the same for actual stuff
-      //probably wont be
-
       //turn led on
       analogWrite(ledPin, 255);
-
       //record values from sensor
       emmReturn = analogRead(sensorPin);
       HWSERIAL.print("EMM ");
@@ -51,13 +43,12 @@ void loop()
       filReturn = analogRead(sensor1Pin); 
       HWSERIAL.print("FIL ");
       HWSERIAL.println(filReturn);
-
       //wait a lil so we can see the action
-      delay(100);
+      delay(10);
       //turn the led off
       analogWrite(ledPin, 0);
       //wait a lil so we can see the action
-      delay(100);
+      delay(10);
       if (HWSERIAL.available() > 0)
       {
         data = HWSERIAL.readStringUntil('\n');
@@ -66,15 +57,3 @@ void loop()
     }
   }
 }
-
-
-/* old led code
-  analogWrite(ledPin, 255);
-  lightLevel = analogRead(sensorPin);
-  Serial.println(lightLevel);
-  delay(100);
-  analogWrite(ledPin, 0);
-  lightLevel = analogRead(sensorPin); 
-  Serial.println(lightLevel);
-  delay(100);
-  */

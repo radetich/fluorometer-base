@@ -14,7 +14,7 @@ from systemd import journal
 #OS shutting off probably also should send a END TRANSFER message just in case. Cant hurt. Implement via hook
 
 
-timeout = 300   # [seconds for data collection]
+timeout = 60   # [seconds for data collection]
 
 #begin...
 if __name__ == '__main__':
@@ -24,7 +24,6 @@ if __name__ == '__main__':
         os.system('ip addr > /media/usb/ip.txt')
         #data batch
         journal.write("Opened data file...")
-        dpointer.write('BEGIN BATCH OF DATA\n\n\n')
         #open delay file from USB to determine how long to wait for
         with open("/media/usb/delay.txt", "r") as fpointer:
             #cast wait time to int
@@ -42,6 +41,7 @@ if __name__ == '__main__':
             ser.write(bytes(msg, encoding='utf-8'))
             line = ser.readline().decode('utf-8').rstrip()
             if(line == "GOT BEGIN TRANSFER"):
+                dpointer.write('BEGIN BATCH OF DATA\n\n')
                 journal.write("Waiting for data from Teensy...")
                 currtime = time.time()
                 while time.time() < currtime + timeout:
@@ -58,7 +58,8 @@ if __name__ == '__main__':
 
 
                 ser.close()
-                dpointer.write('END BATCH OF DATA\n\n\n')
+                dpointer.write('\n')
+                dpointer.write('END BATCH OF DATA\n\n')
                 dpointer.close()
                 #we should probably do this somewhere else but for now this + nopwdsudo is the solution
                 os.system('sudo shutdown now')
