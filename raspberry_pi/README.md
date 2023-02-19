@@ -8,6 +8,7 @@ vim (this is a convenience thing)  <br>
 python3.9  <br>
 python3-pip  <br>
 pyserial (installed via pip)  <br>
+systemd (installed via pip)  <br>
 debhelper <- DEPENDENCY FOR USBMOUNT  <br>
 build-essential <- DEPENDENCY FOR USBMOUNT  <br>
 liblockfile-bin <- DEPENDENCY FOR USBMOUNT  <br>
