@@ -37,16 +37,10 @@ if __name__ == '__main__':
             #begin serial handshakes
             ser = serial.Serial('/dev/ttyAMA0', 115200, timeout=1)
 
-            #end any mishandled transfers well..
-            msg = 'END TRANSFER\n'
-            ser.write(bytes(msg, encoding='utf-8'))
             ser.reset_input_buffer()
             msg = 'BEGIN TRANSFER\n'
             ser.write(bytes(msg, encoding='utf-8'))
             line = ser.readline().decode('utf-8').rstrip()
-            print(line)
-            while(line != "GOT BEGIN TRANSFER"):
-                pass
             if(line == "GOT BEGIN TRANSFER"):
                 journal.write("Waiting for data from Teensy...")
                 currtime = time.time()
