@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# PYTHON SERIAL RECEPTION CODE FOR THE BALL AEROSPACE IN WATER FLUOROMETER
+# COLE RADETICH 2023
 # file should be in /home/control 
 
 # import
