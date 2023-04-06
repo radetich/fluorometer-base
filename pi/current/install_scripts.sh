@@ -1,4 +1,17 @@
 #!/bin/bash
 # Shebang! We're in
 
-# TO-DO! Write install script to install and enable systemd service, usbmount and dependencies, and add python
+# run as sudo ./install_scripts.sh
+
+
+# uncomment if admin user "control" is not present
+
+# adduser control sudo
+
+mv ./launch_python.service /etc/systemd/system/
+
+#check this
+mv ./waitnrecv /home/control/scripts/
+
+systemctl enable launch_python.service
+systemctl start launch_python.service 
