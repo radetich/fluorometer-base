@@ -10,7 +10,7 @@ const int sensor1Pin = 15; //sensor1 (hammamatsu, filtered)
 const int ledPin = 2; //driving LEDs, PWM**
 const int boardLedPin = 13; //little orange fella
 
-int emmReturn, filReturn, pwm_on; //variables
+int emmReturn, filReturn, pwm_on, timestep; //variables
 //extra pin info: https://www.pjrc.com/store/teensy40.html#pins
 //setup
 void setup() 
@@ -39,7 +39,7 @@ void loop()
     //while loop to initiate transfer. a response back from the Pi will break this loop and put everything back to waiting mode.
     while(data == "BEGIN TRANSFER")
     {
-      int timestep = 0;
+      timestep = 0;
       if(pwm_on == 0)
       {
         //turn led on and set flag variable. This allows us to begin at 57/255 of our 4 KHz PWM and remain at that through capture.
