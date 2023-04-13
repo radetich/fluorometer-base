@@ -11,7 +11,7 @@
 mv ./launch_python.service /etc/systemd/system/
 
 #check this
-mv ./waitnrecv /home/control/scripts/
+mv ./waitnrecv.py /home/control/scripts/
 
 systemctl enable launch_python.service
 systemctl start launch_python.service 

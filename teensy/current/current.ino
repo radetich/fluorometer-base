@@ -39,6 +39,7 @@ void loop()
     //while loop to initiate transfer. a response back from the Pi will break this loop and put everything back to waiting mode.
     while(data == "BEGIN TRANSFER")
     {
+      int timestep = 0;
       if(pwm_on == 0)
       {
         //turn led on and set flag variable. This allows us to begin at 57/255 of our 4 KHz PWM and remain at that through capture.
@@ -53,17 +54,21 @@ void loop()
       //record values from sensor until HWSERIAL responds to stop...
       emmReturn = analogRead(sensorPin);
       //control light return value (NO FILTER/FILTER FOR EMISSION)
-      HWSERIAL.print("C ");
-      HWSERIAL.println(emmReturn);
+      timestep++;
+      HWSERIAL.print(timestep);
+      HWSERIAL.print(" C ");
+      HWSERIAL.print(emmReturn);
       filReturn = analogRead(sensor1Pin); 
       //FILTER RETURN
-      HWSERIAL.print("F ");
-      HWSERIAL.println(filReturn);
+      HWSERIAL.print(" F ");
+      HWSERIAL.print(filReturn);
+      HWSERIAL.println(",");
       //this shows the Pi has responded and wants data to stop. shut off pwm and wait for next ack.
       if(HWSERIAL.available() > 0)
       {
         analogWrite(ledPin, 0);
         pwm_on = 0;
+        timestep = 0;
         data = HWSERIAL.readStringUntil('\n');
       }
     }

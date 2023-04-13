@@ -1,1 +1,9 @@
-# TO-DO Write sysd service to launch our python script on boot
+[Unit]
+Description=Fluorometer Python Driver
+After=multi-user.target
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/python3 /home/control/scripts/waitnrecv.py
+[Install]
+WantedBy=multi-user.target
