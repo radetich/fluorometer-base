@@ -49,7 +49,7 @@ if __name__ == '__main__':
                 while time.time() < currtime + timeout:
                     # this will run for timeout seconds and then exit
                     # work in progress
-                    journal.write("GOT POINT...")
+                    journal.write("GOT POINTS...")
                     line = ser.readline().decode('utf-8').rstrip()
                     dpointer.write(line + '\n')
                 #what this says is kinda superfluous since we dont read it
