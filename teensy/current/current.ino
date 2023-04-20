@@ -9,6 +9,7 @@ const int sensorPin = 14; //sensor0 (hamamatsu, not filtered)
 const int sensor1Pin = 15; //sensor1 (hammamatsu, filtered)
 const int ledPin = 2; //driving LEDs, PWM**
 const int boardLedPin = 13; //little orange fella
+const int opAmp = 18; //OP Amp
 
 int emmReturn, filReturn, pwm_on, timestep; //variables
 //extra pin info: https://www.pjrc.com/store/teensy40.html#pins
@@ -19,6 +20,7 @@ void setup()
   HWSERIAL.begin(115200);
   HWSERIAL.setTimeout(100);
   //init LED pin for PWM output
+  pinMode(opAmp, OUTPUT);
   pinMode(ledPin, OUTPUT);
   //init debug LED (this MUST remain off for the final unit, both for battery life purposes and light pollution)
   //pinMode(boardLedPin, OUTPUT);
@@ -42,6 +44,7 @@ void loop()
       timestep = 0;
       if(pwm_on == 0)
       {
+        analogWrite(opAmp, HIGH);
         //turn led on and set flag variable. This allows us to begin at 57/255 of our 4 KHz PWM and remain at that through capture.
         //this should be about 20% of our pwm or about 1.00185882353 KHz
         analogWrite(ledPin, 57);
@@ -66,6 +69,7 @@ void loop()
       //this shows the Pi has responded and wants data to stop. shut off pwm and wait for next ack.
       if(HWSERIAL.available() > 0)
       {
+        analogWrite(opAmp, LOW);
         analogWrite(ledPin, 0);
         pwm_on = 0;
         timestep = 0;
