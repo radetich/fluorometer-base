@@ -4,6 +4,7 @@ After=multi-user.target
 [Service]
 Type=simple
 Restart=always
+User=control
 ExecStart=/usr/bin/python3 /home/control/scripts/waitnrecv.py
 [Install]
 WantedBy=multi-user.target

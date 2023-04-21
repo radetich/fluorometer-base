@@ -16,7 +16,7 @@ from systemd import journal
 #OS shutting off probably also should send a END TRANSFER message just in case. Cant hurt. Implement via hook
 
 
-timeout = 60   # [seconds for data collection]
+timeout = 300   # [seconds for data collection]
 
 #begin...
 if __name__ == '__main__':
