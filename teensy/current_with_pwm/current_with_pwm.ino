@@ -11,7 +11,7 @@ const int ledPin = 2; //driving LEDs, PWM**
 const int boardLedPin = 13; //little orange fella
 const int opAmp = 18; //OP Amp
 
-int ret1, ret2, led_on, timestep; //variables
+int ret1, ret2, pwm_on, timestep; //variables
 //extra pin info: https://www.pjrc.com/store/teensy40.html#pins
 //setup
 void setup() 
@@ -25,7 +25,7 @@ void setup()
   //init debug LED (this MUST remain off for the final unit, both for battery life purposes and light pollution)
   //pinMode(boardLedPin, OUTPUT);
   //init pwm flag. this is off since the device is off
-  led_on = 0;
+  pwm_on = 0;
 }
 
 void loop() 
@@ -43,11 +43,14 @@ void loop()
     timestep = 0;
     while(data == "BEGIN TRANSFER")
     {
-      if(led_on == 0)
+      if(pwm_on == 0)
       {
         digitalWrite(opAmp, HIGH);
-        digitalWrite(ledPin, HIGH);
-        led_on = 1;
+        //turn led on and set flag variable. This allows us to begin at 57/255 of our 4 KHz PWM and remain at that through capture.
+        //this should be about 20% of our pwm or about 1.00185882353 KHz
+        analogWrite(ledPin, 127);
+        analogWriteFrequency(ledPin, 1000);
+        pwm_on = 1;
       }
 
       //We are transferring! begin transfer.
@@ -66,8 +69,8 @@ void loop()
       if(HWSERIAL.available() > 0)
       {
         digitalWrite(opAmp, LOW);
-        digitalWrite(ledPin, LOW);
-        led_on = 0;
+        analogWrite(ledPin, 0);
+        pwm_on = 0;
         timestep = 0;
         data = HWSERIAL.readStringUntil('\n');
       }
