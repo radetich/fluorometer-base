@@ -3,7 +3,21 @@
 * COLE RADETICH 2023
 */
 
-#define HWSERIAL Serial1 // this makes it easier for us to reference the TX/RX, since serial as a keyword here references USB OTG mode and not RX/Tx
+/*
+ ███████╗██╗     ██╗   ██╗ ██████╗ ██████╗  ██████╗ 
+ ██╔════╝██║     ██║   ██║██╔═══██╗██╔══██╗██╔═══██╗
+ █████╗  ██║     ██║   ██║██║   ██║██████╔╝██║   ██║
+ ██╔══╝  ██║     ██║   ██║██║   ██║██╔══██╗██║   ██║
+ ██║     ███████╗╚██████╔╝╚██████╔╝██║  ██║╚██████╔╝
+ ╚═╝     ╚══════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ 
+
+
+ ╔═╗┌┐┌  ┬┌┐┌  ┬ ┬┌─┐┌┬┐┌─┐┬─┐  ┌─┐┬  ┬ ┬┌─┐┬─┐┌─┐┌┬┐┌─┐┌┬┐┌─┐┬─┐
+ ╠═╣│││  ││││  │││├─┤ │ ├┤ ├┬┘  ├┤ │  │ ││ │├┬┘│ ││││├┤  │ ├┤ ├┬┘
+ ╩ ╩┘└┘  ┴┘└┘  └┴┘┴ ┴ ┴ └─┘┴└─  └  ┴─┘└─┘└─┘┴└─└─┘┴ ┴└─┘ ┴ └─┘┴└─
+*/
+
+#define HWSERIAL Serial1 //this makes it easier for us to reference the TX/RX, since serial as a keyword here references USB OTG mode and not RX/Tx
 //CROSS CHECK THESE WITH HARDWARE VALUES, ENSURE THAT WE ARE REFERENCING THE CORRECT DIODES
 const int sensorPin = 14; //sensor0 (hamamatsu, not filtered)
 const int sensor1Pin = 15; //sensor1 (hammamatsu, filtered)
@@ -30,6 +44,7 @@ void setup()
 
 void loop() 
 {
+  String delim = ", ";
   //wait for initial ack. This will allow some nonsense data to come through, and will allow our device to have its desired delay
   if(HWSERIAL.available() > 0) 
   {
@@ -38,33 +53,22 @@ void loop()
     //send ack back w the GOT header, handshake complete!
     HWSERIAL.print("GOT ");
     HWSERIAL.println(data);
+
     //while loop to initiate transfer. a response back from the Pi will break this loop and put everything back to waiting mode.
-    
-    timestep = 0;
     while(data == "BEGIN TRANSFER")
     {
       if(pwm_on == 0)
       {
         digitalWrite(opAmp, HIGH);
-        //turn led on and set flag variable. This allows us to begin at 57/255 of our 4 KHz PWM and remain at that through capture.
-        //this should be about 20% of our pwm or about 1.00185882353 KHz
         analogWrite(ledPin, 127);
         analogWriteFrequency(ledPin, 1000);
         pwm_on = 1;
       }
 
       //We are transferring! begin transfer.
-      timestep++;
-      //record values from sensor until HWSERIAL responds to stop...
       ret1 = analogRead(sensorPin);
-      //control light return value (NO FILTER/FILTER FOR EMISSION)
-      HWSERIAL.print(timestep);
-      HWSERIAL.print(", small: ");
-      HWSERIAL.print(ret1);
       ret2 = analogRead(sensor1Pin); 
-      //FILTER RETURN
-      HWSERIAL.print(", large: ");
-      HWSERIAL.println(ret2);
+      HWSERIAL.println(delim + ret1 + delim + ret2);
       //this shows the Pi has responded and wants data to stop. shut off pwm and wait for next ack.
       if(HWSERIAL.available() > 0)
       {
